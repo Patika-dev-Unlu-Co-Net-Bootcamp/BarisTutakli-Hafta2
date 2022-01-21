@@ -20,12 +20,15 @@ namespace BarisTutakli.WebApi.ProductOperations.CreateProduct
             var product = _dbcontext.Products.SingleOrDefault(product => product.ProductName == Model.ProductName);
             if (product is not null)
                 throw new InvalidOperationException("Urun zaten mevcut");
-            product = new Product();
-            product.ProductName = Model.ProductName;
-            product.CategoryId = Model.CategoryId;
-            product.PublishingDate = Model.PublishingDate;
-            _dbcontext.Products.Add(product);
-            _dbcontext.SaveChanges();
+            
+                product = new Product();
+                product.ProductName = Model.ProductName;
+                product.CategoryId = Model.CategoryId;
+                product.PublishingDate = Model.PublishingDate;
+                _dbcontext.Products.Add(product);
+                _dbcontext.SaveChanges();
+            
+
         }
     }
 }

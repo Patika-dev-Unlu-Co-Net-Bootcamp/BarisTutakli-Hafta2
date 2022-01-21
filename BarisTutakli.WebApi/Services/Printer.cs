@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BarisTutakli.WebApi.FakeServices
+namespace BarisTutakli.WebApi.Services
 {
     public class Printer
     {
