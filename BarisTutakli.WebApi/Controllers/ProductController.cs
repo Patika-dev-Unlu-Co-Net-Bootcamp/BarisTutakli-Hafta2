@@ -1,49 +1,44 @@
-﻿using BarisTutakli.WebApi.DbOperations;
-using BarisTutakli.WebApi.Models.Concrete;
-using BarisTutakli.WebApi.ProductOperations.CreateProduct;
-using BarisTutakli.WebApi.ProductOperations.DeleteProduct;
-using BarisTutakli.WebApi.ProductOperations.GetProductDetail;
-using BarisTutakli.WebApi.ProductOperations.GetProducts;
-using BarisTutakli.WebApi.ProductOperations.UpdateProduct;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BarisTutakli.WebApi.Controllers
+﻿namespace BarisTutakli.WebApi.Controllers
 {
+    using BarisTutakli.WebApi.DbOperations;
+    using BarisTutakli.WebApi.Models.Concrete;
+    using BarisTutakli.WebApi.ProductOperations.CreateProduct;
+    using BarisTutakli.WebApi.ProductOperations.DeleteProduct;
+    using BarisTutakli.WebApi.ProductOperations.GetProductDetail;
+    using BarisTutakli.WebApi.ProductOperations.GetProducts;
+    using BarisTutakli.WebApi.ProductOperations.ListProducts;
+    using BarisTutakli.WebApi.ProductOperations.UpdateProduct;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     [Route("api/[controller]s")]
     [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly ECommerceDbContext _context;
+
         public ProductController(ECommerceDbContext context)
         {
             _context = context;
         }
-        
+
         [HttpGet]
         public IActionResult Get()
         {
             GetProductsQuery query = new GetProductsQuery(_context);
             var result = query.Handle();
-           
+
             return Ok(result);
         }
 
-        /// <summary>
-        /// Get a specific product by id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult GetProductById(int id)
         {
             GetProductDetailQuery query = new GetProductDetailQuery(_context);
             query.ProductId = id;
-            
+
             var result = query.Handle();
             if (result is not null)
             {
@@ -52,24 +47,18 @@ namespace BarisTutakli.WebApi.Controllers
             return NoContent();// return 204 
         }
 
-    
-        /// <summary>
-        /// Create a new product
-        /// </summary>
-        /// <param name="product"></param>
-        /// <returns></returns>
         [HttpPost()]
-        public IActionResult Create([FromBody]Product product)
+        public IActionResult Create([FromBody] Product product)
         {
 
-            
-            
+
+
             try
             {
                 CreateProductCommand command = new CreateProductCommand(_context);
 
                 command.Model = new CreateProductModel { CategoryId = product.CategoryId, ProductName = product.ProductName, PublishingDate = product.PublishingDate };
-                       
+
                 command.Handle();
             }
             catch (Exception)
@@ -78,56 +67,17 @@ namespace BarisTutakli.WebApi.Controllers
                 return StatusCode(500); //500
             }
             // Return a message and the creation time of the product
-            return Created("Index",new {message="Product added.", time = DateTime.Now });//201
-            
+            return Created("Index", new { message = "Product added.", time = DateTime.Now });//201
         }
 
-        /// <summary>
-        /// Update a product
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="product"></param>
-        /// <returns></returns>
         [HttpPut("{id}")]
-        public IActionResult Update(int id,[FromBody] Product product)
+        public IActionResult Update(int id, [FromBody] UpdateProductModel updateProductModel)
         {
-            var result = CheckByIdIfItemExist(id);
-            if (CheckByIdIfItemExist(product.Id) is  null)
-            {
-                return NotFound();//404
-            }
-           
-            try
-            {
-                result.Id = product.Id != default ? product.Id : result.Id;
-                result.ProductName = product.ProductName!= default ? product.ProductName:result.ProductName;
-                result.CategoryId = product.CategoryId != default ? product.CategoryId : result.CategoryId; 
-                result.PublishingDate = product.PublishingDate != default ? product.PublishingDate : result.PublishingDate;
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(500);
-            }
-            
-            return Ok();
-
-        }
-
-        /// <summary>
-        /// Update a product
-        /// </summary>
-        /// <param name="product"></param>
-        /// <returns></returns>
-        [HttpPatch("{id}")]
-        public IActionResult Update(int id,[FromBody] UpdateProductModel updateProductModel)
-        {
-
             UpdateProductCommand command = new UpdateProductCommand(_context);
             command.ProductId = id;
             command.Model = updateProductModel;
 
-            
+
             try
             {
                 command.Handle();
@@ -140,17 +90,33 @@ namespace BarisTutakli.WebApi.Controllers
             return Ok();
         }
 
-        /// <summary>
-        ///  Delete a product
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        [HttpPatch("{id}")]
+        public IActionResult UpdateProductCategory(int id, [FromBody] UpdateProductCategoryViewModel updateProductCategoryViewModel)
+        {
+
+            UpdateProductCommand command = new UpdateProductCommand(_context);
+
+            command.ProductId = id;
+            command.Model = new UpdateProductModel { CategoryId = updateProductCategoryViewModel.CategoryId };
+
+            try
+            {
+                command.Handle();
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            
 
-           
+
+
             try
             {
                 DeleteProductCommand command = new DeleteProductCommand(_context);
@@ -162,11 +128,10 @@ namespace BarisTutakli.WebApi.Controllers
 
                 return StatusCode(500);
             }
-         
 
-          
+
+
             return Ok();//200
-
         }
 
         [HttpHead("{id}")]
@@ -184,30 +149,18 @@ namespace BarisTutakli.WebApi.Controllers
                 return temp;
             }
             return null;
-
         }
 
-        /// <summary>
-        ///  Unauthorized request
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="authorization"></param>
-        /// <returns></returns>
         [HttpGet("/panel/{authorization}")]
         public IActionResult HowToReturn401(string authorization)
         {
-            if (authorization=="user")
+            if (authorization == "user")
             {
                 return Unauthorized();//401
             }
             return Ok();
         }
 
-        /// <summary>
-        ///  Forbidden
-        /// </summary>
-        /// <param name="authorization"></param>
-        /// <returns></returns>
         [HttpGet("/panel/vip/{authorization}")]
         public IActionResult HowToReturn403(string authorization)
         {
@@ -221,49 +174,52 @@ namespace BarisTutakli.WebApi.Controllers
         [HttpGet("/admin")]
         public IActionResult HowToReturn503()
         {
-          
+
             return StatusCode(503);
         }
 
         [HttpGet("sortAscById")]
         public IActionResult SortAscById()
         {
-            List<Product> temp;
+            ListProductsByAscOrderQuery query = new ListProductsByAscOrderQuery(_context);
+            List<Product> orderedList;
             try
             {
-                temp = InMemoryDal.MemoryDal.ProductList.OrderBy(p => p.Id).ToList();
+                orderedList = query.Handle();
             }
             catch (Exception)
             {
 
                 return StatusCode(500);
             }
-            if (temp.Count == 0)
+
+            if (orderedList.Count == 0)
             {
                 return NotFound();
             }
-            return Ok(temp);
+            return Ok(orderedList);
         }
+
         [HttpGet("sortDescById")]
         public IActionResult SortDescById()
         {
-            List<Product> temp;
+            ListProductsByDescOrderQuery query = new ListProductsByDescOrderQuery(_context);
+            List<Product> descOrderedList;
             try
             {
-                temp = InMemoryDal.MemoryDal.ProductList.OrderByDescending(p => p.Id).ToList();
+                descOrderedList = query.Handle();
             }
             catch (Exception)
             {
 
                 return StatusCode(500);
             }
-            if (temp.Count==0)
+
+            if (descOrderedList.Count == 0)
             {
                 return NotFound();
             }
-            return Ok(temp);
+            return Ok(descOrderedList);
         }
-      
-
     }
 }

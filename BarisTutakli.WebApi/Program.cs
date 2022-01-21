@@ -1,6 +1,7 @@
 namespace BarisTutakli.WebApi
 {
     using BarisTutakli.WebApi.DbOperations;
+    using BarisTutakli.WebApi.FakeServices;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -19,7 +20,11 @@ namespace BarisTutakli.WebApi
                 var services = scope.ServiceProvider;
                 DataGenerator.Initialize(services);
             }
-
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                Printer.Initialize(services);
+            }
 
             host.Run();
         }

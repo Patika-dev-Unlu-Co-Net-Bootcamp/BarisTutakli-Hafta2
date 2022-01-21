@@ -1,17 +1,17 @@
-﻿using BarisTutakli.WebApi.Common;
-using BarisTutakli.WebApi.DbOperations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BarisTutakli.WebApi.ProductOperations.UpdateProduct
+﻿namespace BarisTutakli.WebApi.ProductOperations.UpdateProduct
 {
+    using BarisTutakli.WebApi.DbOperations;
+    using System;
+    using System.Linq;
+
     public class UpdateProductCommand
     {
         private readonly ECommerceDbContext _context;
+
         public int ProductId { get; set; }
-        public UpdateProductModel Model{get;set;}
+
+        public UpdateProductModel Model { get; set; }
+
         public UpdateProductCommand(ECommerceDbContext context)
         {
             _context = context;
@@ -24,14 +24,11 @@ namespace BarisTutakli.WebApi.ProductOperations.UpdateProduct
             {
                 throw new InvalidOperationException("ürün bulunamadı");
             }
-            product.CategoryId = Model.CategoryId;
-            product.ProductName = Model.ProductName;
+            product.CategoryId = Model.CategoryId != default ? Model.CategoryId : product.CategoryId;
+            product.ProductName = Model.ProductName != default ? Model.ProductName : product.ProductName;
+            product.PublishingDate = Model.PublishingDate != default ? Model.PublishingDate : product.PublishingDate;
 
             _context.SaveChanges();
-
-
-
         }
-
     }
 }

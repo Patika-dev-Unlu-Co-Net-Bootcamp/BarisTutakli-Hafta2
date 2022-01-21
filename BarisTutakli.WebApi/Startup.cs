@@ -1,4 +1,5 @@
 using BarisTutakli.WebApi.DbOperations;
+using BarisTutakli.WebApi.Middleswares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,8 @@ namespace BarisTutakli.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {
