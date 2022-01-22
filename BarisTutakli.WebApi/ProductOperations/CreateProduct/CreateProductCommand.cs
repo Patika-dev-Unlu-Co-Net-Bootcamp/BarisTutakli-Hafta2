@@ -23,7 +23,7 @@ namespace BarisTutakli.WebApi.ProductOperations.CreateProduct
         {
             var product = _dbcontext.Products.SingleOrDefault(product => product.ProductName == Model.ProductName);
             if (product is not null)
-                throw new InvalidOperationException("Urun zaten mevcut");
+                throw new InvalidOperationException(Messages.AlreadyExist);
 
             
             product = _mapper.Map(Model);

@@ -9,6 +9,6 @@ namespace BarisTutakli.WebApi.ProductOperations.GetProductDetail
     {
         public string Category { get; set; }
         public string ProductName { get; set; }
-        public DateTime PublishingDate { get; set; }
+        public DateTime PublishDate { get; set; }
     }
 }

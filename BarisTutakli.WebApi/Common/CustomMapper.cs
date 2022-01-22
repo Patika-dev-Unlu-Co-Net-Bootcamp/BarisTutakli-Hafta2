@@ -16,20 +16,20 @@ namespace BarisTutakli.WebApi.Common
         public override Product Map(CreateProductModel productModel)
         {
 
-            return new Product { CategoryId = productModel.CategoryId, ProductName = productModel.ProductName, PublishingDate = productModel.PublishingDate };
+            return new Product { CategoryId = productModel.CategoryId, ProductName = productModel.ProductName, PublishDate = productModel.PublishDate };
 
         }
         public override ProductDetailViewModel Map(Product product)
         {
 
-            return new ProductDetailViewModel { Category = ((CategoryEnum)product.CategoryId).ToString(), ProductName = product.ProductName, PublishingDate = product.PublishingDate };
+            return new ProductDetailViewModel { Category = ((CategoryEnum)product.CategoryId).ToString(), ProductName = product.ProductName, PublishDate = product.PublishDate };
 
         }
 
         public override List<ProductsViewModel> Map(List<Product> productList)
         {
             List<ProductsViewModel> productviewModelsList = new List<ProductsViewModel>();
-            productList.ForEach(product => productviewModelsList.Add(new ProductsViewModel { Category = ((CategoryEnum)product.CategoryId).ToString(), ProductName = product.ProductName, PublishingDate = product.PublishingDate }));
+            productList.ForEach(product => productviewModelsList.Add(new ProductsViewModel { Category = ((CategoryEnum)product.CategoryId).ToString(), ProductName = product.ProductName, PublishDate = product.PublishDate }));
             return productviewModelsList;
         }
 
@@ -38,7 +38,7 @@ namespace BarisTutakli.WebApi.Common
             Product product =new Product();
             product.CategoryId = updateProduct.CategoryId != default ? updateProduct.CategoryId : product.CategoryId;
             product.ProductName = updateProduct.ProductName != default ? updateProduct.ProductName : product.ProductName;
-            product.PublishingDate = updateProduct.PublishingDate != default ? updateProduct.PublishingDate : product.PublishingDate;
+            product.PublishDate = updateProduct.PublishDate != default ? updateProduct.PublishDate : product.PublishDate;
             return product;
         }
     }

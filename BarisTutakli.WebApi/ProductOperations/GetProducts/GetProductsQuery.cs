@@ -22,7 +22,7 @@ namespace BarisTutakli.WebApi.ProductOperations.GetProducts
             List<ProductsViewModel> productviewModels = _mapper.Map(_context.Products.ToList());
             if (productviewModels.Count==0)
             {
-                throw new InvalidOperationException("ürünler buunamadı");
+                throw new InvalidOperationException(Messages.NotFound);
             }
 
             return productviewModels;

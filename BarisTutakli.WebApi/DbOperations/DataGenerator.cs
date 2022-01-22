@@ -22,9 +22,9 @@ namespace BarisTutakli.WebApi.DbOperations
                 }
 
                 context.Products.AddRange(
-                   new Product { ProductName="Iphone", PublishingDate=DateTime.Now , CategoryId=1},
-                   new Product { ProductName = "Hp", PublishingDate = DateTime.Now, CategoryId = 2 },
-                   new Product { ProductName = "Monster", PublishingDate = DateTime.Now, CategoryId = 2 }
+                   new Product { ProductName="Iphone", PublishDate = DateTime.Now , CategoryId=1},
+                   new Product { ProductName = "Hp", PublishDate = DateTime.Now, CategoryId = 2 },
+                   new Product { ProductName = "Monster", PublishDate = DateTime.Now, CategoryId = 2 }
                    );
 
                 context.SaveChanges();

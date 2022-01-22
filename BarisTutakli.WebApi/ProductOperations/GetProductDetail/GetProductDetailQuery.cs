@@ -24,7 +24,7 @@ namespace BarisTutakli.WebApi.ProductOperations.GetProductDetail
             var product = _context.Products.SingleOrDefault(p => p.Id == ProductId);
             if (product is null)
             {
-                throw new InvalidOperationException("Product bulunamadı");
+                throw new InvalidOperationException(Messages.NotFound);
             }
             ProductDetailViewModel vm = _mapper.Map(product);
 

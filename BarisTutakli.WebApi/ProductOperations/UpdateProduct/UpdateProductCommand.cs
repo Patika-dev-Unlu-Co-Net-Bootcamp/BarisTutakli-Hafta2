@@ -1,5 +1,6 @@
 ﻿namespace BarisTutakli.WebApi.ProductOperations.UpdateProduct
 {
+    using BarisTutakli.WebApi.Common;
     using BarisTutakli.WebApi.Common.Abstract;
     using BarisTutakli.WebApi.DbOperations;
     using System;
@@ -25,7 +26,7 @@
             var product = _context.Products.SingleOrDefault(p => p.Id == ProductId);
             if (product is null)
             {
-                throw new InvalidOperationException("ürün bulunamadı");
+                throw new InvalidOperationException(Messages.NotFound);
             }
             
             product= _mapper.Map(Model);

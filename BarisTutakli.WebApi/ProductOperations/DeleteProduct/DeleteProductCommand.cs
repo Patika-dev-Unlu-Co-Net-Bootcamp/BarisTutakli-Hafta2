@@ -1,4 +1,5 @@
-﻿using BarisTutakli.WebApi.DbOperations;
+﻿using BarisTutakli.WebApi.Common;
+using BarisTutakli.WebApi.DbOperations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace BarisTutakli.WebApi.ProductOperations.DeleteProduct
         public void Handle()
         {
             var product = _dbcontext.Products.SingleOrDefault(p => p.Id == ProductId);
-            if (product is null) { throw new InvalidOperationException("Product bulunamadı"); }
+            if (product is null) { throw new InvalidOperationException(Messages.NotFound); }
             _dbcontext.Products.Remove(product);
             _dbcontext.SaveChanges();
         

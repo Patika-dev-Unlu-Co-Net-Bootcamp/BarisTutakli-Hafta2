@@ -1,11 +1,13 @@
 ﻿using BarisTutakli.WebApi.Models.Concrete;
+using BarisTutakli.WebApi.ProductOperations.CreateProduct;
 using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BarisTutakli.WebApi.ProductOperations.CreateProduct
+namespace BarisTutakli.WebApi.ProductOperations.Extensions
+
 {
     public static class ProductValidatorExtension
     {
@@ -15,7 +17,7 @@ namespace BarisTutakli.WebApi.ProductOperations.CreateProduct
         public static void ValidateIt(this ProductValidator validator,CreateProductModel createProductModel)
         {
           
-            if (createProductModel.PublishingDate.Year<1800)
+            if (createProductModel.PublishDate.Year<1800)
             {
                 IsValid = false;
             }

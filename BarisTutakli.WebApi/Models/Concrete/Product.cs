@@ -13,7 +13,7 @@ namespace BarisTutakli.WebApi.Models.Concrete
         public int Id { get; set; }
         public int CategoryId { get; set; }
         public string ProductName { get; set; }
-        public  DateTime PublishingDate { get; set; }
+        public  DateTime PublishDate { get; set; }
 
 
     }
