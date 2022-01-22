@@ -28,7 +28,7 @@
         [HttpGet]
         public IActionResult Get()
         {
-            GetProductsQuery query = new GetProductsQuery(_context);
+            GetProductsQuery query = new GetProductsQuery(_context, new CustomMapper());
             var result = query.Handle();
 
             return Ok(result);
@@ -37,7 +37,7 @@
         [HttpGet("{id}")]
         public IActionResult GetProductById(int id)
         {
-            GetProductDetailQuery query = new GetProductDetailQuery(_context);
+            GetProductDetailQuery query = new GetProductDetailQuery(_context, new CustomMapper());
             query.ProductId = id;
 
             var result = query.Handle();
@@ -81,7 +81,7 @@
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateProductModel updateProductModel)
         {
-            UpdateProductCommand command = new UpdateProductCommand(_context);
+            UpdateProductCommand command = new UpdateProductCommand(_context, new CustomMapper());
             command.ProductId = id;
             command.Model = updateProductModel;
 
@@ -102,7 +102,7 @@
         public IActionResult UpdateProductCategory(int id, [FromBody] UpdateProductCategoryViewModel updateProductCategoryViewModel)
         {
 
-            UpdateProductCommand command = new UpdateProductCommand(_context);
+            UpdateProductCommand command = new UpdateProductCommand(_context, new CustomMapper());
 
             command.ProductId = id;
             command.Model = new UpdateProductModel { CategoryId = updateProductCategoryViewModel.CategoryId };
@@ -136,8 +136,6 @@
 
                 return StatusCode(500);
             }
-
-
 
             return Ok();//200
         }

@@ -27,9 +27,6 @@ namespace BarisTutakli.WebApi.ProductOperations.CreateProduct
 
             
             product = _mapper.Map(Model);
-            //product.ProductName = Model.ProductName;
-            //product.CategoryId = Model.CategoryId;
-            //product.PublishingDate = Model.PublishingDate;
             _dbcontext.Products.Add(product);
             _dbcontext.SaveChanges();
 

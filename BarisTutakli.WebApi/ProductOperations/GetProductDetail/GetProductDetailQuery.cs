@@ -1,4 +1,5 @@
 ﻿using BarisTutakli.WebApi.Common;
+using BarisTutakli.WebApi.Common.Abstract;
 using BarisTutakli.WebApi.DbOperations;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace BarisTutakli.WebApi.ProductOperations.GetProductDetail
     {
         private readonly ECommerceDbContext _context;
         public int ProductId { get; set; }
-        public GetProductDetailQuery(ECommerceDbContext context)
+        private readonly Mapper _mapper;
+        public GetProductDetailQuery(ECommerceDbContext context,CustomMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public ProductDetailViewModel Handle()
@@ -23,10 +26,7 @@ namespace BarisTutakli.WebApi.ProductOperations.GetProductDetail
             {
                 throw new InvalidOperationException("Product bulunamadı");
             }
-            ProductDetailViewModel vm = new ProductDetailViewModel();
-            vm.Category = ((CategoryEnum)product.CategoryId).ToString();
-            vm.ProductName = product.ProductName;
-            vm.PublishingDate = product.PublishingDate;
+            ProductDetailViewModel vm = _mapper.Map(product);
 
             return vm;
         }

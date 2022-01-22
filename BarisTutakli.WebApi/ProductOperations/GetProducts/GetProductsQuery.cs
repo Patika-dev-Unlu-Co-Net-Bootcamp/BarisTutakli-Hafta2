@@ -1,4 +1,5 @@
 ﻿using BarisTutakli.WebApi.Common;
+using BarisTutakli.WebApi.Common.Abstract;
 using BarisTutakli.WebApi.DbOperations;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,15 @@ namespace BarisTutakli.WebApi.ProductOperations.GetProducts
     public class GetProductsQuery
     {
         public readonly ECommerceDbContext _context;
-        public GetProductsQuery(ECommerceDbContext context)
+        private readonly Mapper _mapper;
+        public GetProductsQuery(ECommerceDbContext context,Mapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public List<ProductsViewModel> Handle()
         {
-            List<ProductsViewModel> productviewModels = new List<ProductsViewModel>();
-
-            _context.Products.ToList().ForEach(product => productviewModels.Add(new ProductsViewModel { Category = ((CategoryEnum)product.CategoryId).ToString(), ProductName = product.ProductName, PublishingDate = product.PublishingDate }));
+            List<ProductsViewModel> productviewModels = _mapper.Map(_context.Products.ToList());
             if (productviewModels.Count==0)
             {
                 throw new InvalidOperationException("ürünler buunamadı");

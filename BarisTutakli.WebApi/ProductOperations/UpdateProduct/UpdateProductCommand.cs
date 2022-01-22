@@ -1,5 +1,6 @@
 ﻿namespace BarisTutakli.WebApi.ProductOperations.UpdateProduct
 {
+    using BarisTutakli.WebApi.Common.Abstract;
     using BarisTutakli.WebApi.DbOperations;
     using System;
     using System.Linq;
@@ -11,10 +12,12 @@
         public int ProductId { get; set; }
 
         public UpdateProductModel Model { get; set; }
+        private readonly Mapper _mapper;
 
-        public UpdateProductCommand(ECommerceDbContext context)
+        public UpdateProductCommand(ECommerceDbContext context,Mapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public void Handle()
@@ -24,9 +27,8 @@
             {
                 throw new InvalidOperationException("ürün bulunamadı");
             }
-            product.CategoryId = Model.CategoryId != default ? Model.CategoryId : product.CategoryId;
-            product.ProductName = Model.ProductName != default ? Model.ProductName : product.ProductName;
-            product.PublishingDate = Model.PublishingDate != default ? Model.PublishingDate : product.PublishingDate;
+            
+            product= _mapper.Map(Model);
 
             _context.SaveChanges();
         }
