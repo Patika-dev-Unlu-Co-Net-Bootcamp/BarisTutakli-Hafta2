@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "e59bOqdYvJaVfO2WMNUiHqJvrRCEt+QkHaT1a3+B9BJ1TaS0NCxGXIVCNnjXomIP+gYqmmLTIWYx2rSKlDISiQ==",
+  "dgSpecHash": "ppKcfvAuLUz0DJRPr591C0N1hwNWgq2xHBB5GFYyn9gqtMRM6NAHQCyOdjXgNLaEtAYyeR12XGhMZ23cRAFK/A==",
   "success": true,
   "projectFilePath": "C:\\Users\\kbez1\\Documents\\kodlar\\Bootcamp\\BarisTutakli-Hafta2\\BarisTutakli.WebApi\\BarisTutakli.WebApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\kbez1\\.nuget\\packages\\fluentvalidation\\10.3.6\\fluentvalidation.10.3.6.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.6\\microsoft.entityframeworkcore.5.0.6.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.6\\microsoft.entityframeworkcore.abstractions.5.0.6.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.6\\microsoft.entityframeworkcore.analyzers.5.0.6.nupkg.sha512",

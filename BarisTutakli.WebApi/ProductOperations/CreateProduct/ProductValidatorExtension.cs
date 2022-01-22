@@ -1,4 +1,5 @@
 ﻿using BarisTutakli.WebApi.Models.Concrete;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,18 @@ namespace BarisTutakli.WebApi.ProductOperations.CreateProduct
 {
     public static class ProductValidatorExtension
     {
-        public static bool IsLongEnough(this Product product)
+       
+        public static bool IsValid{ get; set; }
+        
+        public static void ValidateIt(this ProductValidator validator,CreateProductModel createProductModel)
         {
-            return product.ProductName.Length > 5 ? true : false;
+          
+            if (createProductModel.PublishingDate.Year<1800)
+            {
+                IsValid = false;
+            }
+            IsValid = true;
+            
         }
     }
 }

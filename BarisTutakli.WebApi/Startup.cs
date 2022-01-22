@@ -1,3 +1,5 @@
+using BarisTutakli.WebApi.Common;
+using BarisTutakli.WebApi.Common.Abstract;
 using BarisTutakli.WebApi.DbOperations;
 using BarisTutakli.WebApi.Middleswares;
 using BarisTutakli.WebApi.Services;
@@ -39,6 +41,7 @@ namespace BarisTutakli.WebApi
             services.AddDbContext<ECommerceDbContext>(options => options.UseInMemoryDatabase(databaseName: "ECommerceDb"));
             //services.AddSingleton<ILoggerService, ConsoleLogger>();
             services.AddSingleton<ILoggerService, DBLogger>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

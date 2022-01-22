@@ -1,5 +1,6 @@
 ﻿namespace BarisTutakli.WebApi.Controllers
 {
+    using BarisTutakli.WebApi.Common;
     using BarisTutakli.WebApi.DbOperations;
     using BarisTutakli.WebApi.Models.Concrete;
     using BarisTutakli.WebApi.ProductOperations.CreateProduct;
@@ -48,18 +49,25 @@
         }
 
         [HttpPost()]
-        public IActionResult Create([FromBody] Product product)
+        public IActionResult Create([FromBody] CreateProductModel createProductModel)
         {
 
 
 
             try
             {
-                CreateProductCommand command = new CreateProductCommand(_context);
+                CreateProductCommand command = new CreateProductCommand(_context,new CustomMapper());
+                ProductValidator validator = new ProductValidator();
+                validator.ValidateIt(createProductModel);
+                if (validator.Validate(createProductModel).IsValid && ProductValidatorExtension.IsValid)
+                {
+                    command.Model = createProductModel;
 
-                command.Model = new CreateProductModel { CategoryId = product.CategoryId, ProductName = product.ProductName, PublishingDate = product.PublishingDate };
+                    command.Handle();
+                }
+                
 
-                command.Handle();
+
             }
             catch (Exception)
             {

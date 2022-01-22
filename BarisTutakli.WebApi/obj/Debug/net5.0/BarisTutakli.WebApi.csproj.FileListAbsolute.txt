@@ -32,3 +32,4 @@ C:\Users\kbez1\Documents\kodlar\Bootcamp\BarisTutakli-Hafta2\BarisTutakli.WebApi
 C:\Users\kbez1\Documents\kodlar\Bootcamp\BarisTutakli-Hafta2\BarisTutakli.WebApi\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\kbez1\Documents\kodlar\Bootcamp\BarisTutakli-Hafta2\BarisTutakli.WebApi\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\kbez1\Documents\kodlar\Bootcamp\BarisTutakli-Hafta2\BarisTutakli.WebApi\obj\Debug\net5.0\BarisTutakli.WebApi.csproj.AssemblyReference.cache
+C:\Users\kbez1\Documents\kodlar\Bootcamp\BarisTutakli-Hafta2\BarisTutakli.WebApi\bin\Debug\net5.0\FluentValidation.dll
